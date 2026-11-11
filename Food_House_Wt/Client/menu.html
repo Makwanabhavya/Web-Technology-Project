@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food House - Menu</title>
+   <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">Food House</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="menu.html" class="active">Menu</a>
+            <a href="order-summary.html">Orders</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <div style="display:flex; padding: 20px 50px;">
+        <div style="width: 200px; padding-right: 20px;">
+            <h3>Categories</h3>
+            <ul style="list-style:none; margin-top:15px; line-height:2.2;">
+                <li><a href="#" style="text-decoration:none; color:#222; font-weight:bold;">All Foods</a></li>
+                <li><a href="#" style="text-decoration:none; color:#555;">Pizza</a></li>
+                <li><a href="#" style="text-decoration:none; color:#555;">Burger</a></li>
+                <li><a href="#" style="text-decoration:none; color:#555;">Sandwich</a></li>
+                <li><a href="#" style="text-decoration:none; color:#555;">Drinks</a></li>
+            </ul>
+        </div>
+        <div style="flex:1;">
+            <div class="card-grid" id="menu_grid">
+                <!-- Dynamically populated or static cards -->
+                <div class="card">
+                    <div class="card-img">Pizza</div>
+                    <h3>Margherita Pizza</h3>
+                    <p>₹99</p>
+                    <button class="btn btn-small" onclick="addToCart(1)">Add to Cart</button>
+                </div>
+                <div class="card">
+                    <div class="card-img">Burger</div>
+                    <h3>Veg Burger</h3>
+                    <p>₹90</p>
+                    <button class="btn btn-small" onclick="addToCart(2)">Add to Cart</button>
+                </div>
+                <div class="card">
+                    <div class="card-img">Sandwich</div>
+                    <h3>Club Sandwich</h3>
+                    <p>₹120</p>
+                    <button class="btn btn-small" onclick="addToCart(5)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Food House</p>
+        <div><a href="#">Help</a></div>
+    </footer>
+  <script src="../script.js"></script>
+</body>
+</html>

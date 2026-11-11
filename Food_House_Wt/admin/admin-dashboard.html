@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Food House</title>
+    <!-- Root style.css Link -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body onload="loadLiveDashboard()">
+    <header>
+        <span class="logo">Food House [Admin]</span>
+        <div><span id="admin_welcome">Welcome, Admin</span></div>
+    </header>
+
+    <div class="admin-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <a href="admin-dashboard.html" class="active">📊 Dashboard</a>
+            <a href="admin-menu.html">🍔 Menu</a>
+            <a href="admin-orders.html">📦 Orders</a>
+            <a href="admin-customers.html">👥 Customers</a>
+            <a href="../Client/index.html">🚪 Logout</a>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <main class="admin-main">
+            <h2>Dashboard Overview</h2>
+            
+            <!-- Live Dynamic Stat Cards -->
+            <div class="stat-grid" style="margin-top:20px;">
+                <div class="stat-card">
+                    <h4>Total Orders</h4>
+                    <div class="val" id="stat_orders">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Total Revenue</h4>
+                    <div class="val" id="stat_revenue" style="color:#28a745;">₹0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Total Customers</h4>
+                    <div class="val" id="stat_customers">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Pending Orders</h4>
+                    <div class="val" id="stat_pending" style="color:#e67e22;">0</div>
+                </div>
+            </div>
+
+            <!-- Live Recent Orders Table -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                <h3>Recent Orders</h3>
+                <a href="admin-orders.html" style="font-size:14px; text-decoration:none; color:#333c48; font-weight:600;">View All Orders →</a>
+            </div>
+            
+            <table style="margin-top:15px;">
+                <thead>
+                    <tr>
+                        <th>Order No.</th>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="recent_orders_table">
+                    <!-- Dynamic Rows Loaded by JS -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <!-- Script to Load Realtime Data from LocalStorage -->
+    <script>
+        function loadLiveDashboard() {
+            // 1. Fetch Real Live Data from LocalStorage
+            const orders = JSON.parse(localStorage.getItem('fh_orders') || '[]');
+            const users = JSON.parse(localStorage.getItem('fh_users') || '[]');
+
+            // 2. Calculations
+            const totalOrdersCount = orders.length;
+            const totalRevenueAmount = orders.reduce((total, ord) => total + (Number(ord.amount) || 0), 0);
+            const totalCustomersCount = users.length;
+            const pendingOrdersCount = orders.filter(ord => ord.status === 'Pending').length;
+
+            // 3. Inject Values to UI
+            document.getElementById('stat_orders').innerText = totalOrdersCount;
+            document.getElementById('stat_revenue').innerText = '₹' + totalRevenueAmount;
+            document.getElementById('stat_customers').innerText = totalCustomersCount;
+            document.getElementById('stat_pending').innerText = pendingOrdersCount;
+
+            // 4. Populate Table with Top 5 Recent Orders
+            const tbody = document.getElementById('recent_orders_table');
+            tbody.innerHTML = '';
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align:center; padding: 25px; color:#888;">
+                            No orders found yet. Place an order from the client side.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            // Reverse order to show latest first and take 5
+            const recentOrders = orders.slice().reverse().slice(0, 5);
+            recentOrders.forEach(order => {
+                const isPending = order.status === 'Pending';
+                const statusBadge = isPending 
+                    ? `<span style="color:#e67e22; font-weight:600;">Pending</span>` 
+                    : `<span style="color:#28a745; font-weight:600;">Delivered</span>`;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${order.id}</strong></td>
+                        <td>${order.customer || 'Guest User'}</td>
+                        <td>₹${order.amount}</td>
+                        <td>${statusBadge}</td>
+                    </tr>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

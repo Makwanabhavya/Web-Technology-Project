@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders - Food House</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body onload="renderOrders()">
+    <header>
+        <span class="logo">Food House [Admin]</span>
+        <div><span>Welcome, Admin</span></div>
+    </header>
+
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <a href="admin-dashboard.html">📊 Dashboard</a>
+            <a href="admin-menu.html">🍔 Menu</a>
+            <a href="admin-orders.html" class="active">📦 Orders</a>
+            <a href="admin-customers.html">👥 Customers</a>
+            <a href="../Client/index.html">🚪 Logout</a>
+        </aside>
+
+        <main class="admin-main">
+            <h2>Manage Orders</h2>
+            <table style="margin-top:20px;">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="orders_body"></tbody>
+            </table>
+        </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        function renderOrders() {
+            const orders = JSON.parse(localStorage.getItem('fh_orders') || '[]');
+            const tbody = document.getElementById('orders_body');
+            tbody.innerHTML = '';
+
+            if (orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">No orders found.</td></tr>';
+                return;
+            }
+
+            orders.slice().reverse().forEach((order, index) => {
+                // Find actual index in original array
+                const realIndex = orders.length - 1 - index;
+                const isPending = order.status === 'Pending';
+                const statusColor = isPending ? '#e67e22' : '#28a745';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${order.id}</strong></td>
+                        <td>${order.customer}</td>
+                        <td>₹${order.amount}</td>
+                        <td>${order.date}</td>
+                        <td><b style="color:${statusColor};">${order.status}</b></td>
+                        <td>
+                            ${isPending ? `<button class="btn btn-small" onclick="updateOrderStatus(${realIndex})">Mark Delivered</button>` : `<span style="color:#888; font-size:13px;">Completed</span>`}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function updateOrderStatus(realIndex) {
+            const orders = JSON.parse(localStorage.getItem('fh_orders') || '[]');
+            orders[realIndex].status = 'Delivered';
+            localStorage.setItem('fh_orders', JSON.stringify(orders));
+            renderOrders();
+        }
+    </script>
+</body>
+</html>

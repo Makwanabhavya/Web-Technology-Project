@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food House - Admin Login</title>
+    <!-- Root style.css Link -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="auth-container" style="margin-top:100px;">
+        <h2>Admin Login</h2>
+        <form onsubmit="handleAdminLogin(event)">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="admin_user" class="form-control" placeholder="admin" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="admin_pass" class="form-control" placeholder="admin123" required>
+            </div>
+            <span class="error-msg" id="err_admin" style="margin-bottom:12px; display:block; color:red; font-size:13px;"></span>
+            <button type="submit" class="btn" style="width:100%;">Login</button>
+        </form>
+    </div>
+
+    <!-- External Script -->
+    <script src="../script.js"></script>
+
+    <!-- Direct Inline Script to ensure 100% Redirection -->
+    <script>
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            
+            const user = document.getElementById('admin_user').value.trim();
+            const pass = document.getElementById('admin_pass').value;
+            const err = document.getElementById('err_admin');
+
+            // Admin Credentials Verification
+            if (user === 'admin' && pass === 'admin123') {
+                localStorage.setItem('fh_admin_logged', 'true');
+                alert('Admin Login Successful!');
+                // Redirect directly to dashboard in the same admin folder
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                err.innerText = 'ખોટો Username અથવા Password! (Use: admin / admin123)';
+            }
+        }
+    </script>
+</body>
+</html>

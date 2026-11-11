@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food House - Home</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <a href="index.html" class="logo">Food House</a>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="order-summary.html">Orders</a>
+            <a href="login.html">Login</a>
+          <a href="../admin/admin-login.html">Admin</a>
+        </nav>
+        <div class="nav-icons">
+            <a href="order-summary.html">🛒 Cart</a>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Delicious Food Delivered Fast</h1>
+            <p>Fresh • Tasty • Healthy</p>
+            <a href="menu.html" class="btn">Order Now</a>
+        </div>
+        <div style="background:#ccd; width:260px; height:200px; display:flex; align-items:center; justify-content:center; font-weight:bold; border-radius:8px;">
+            Food Banner
+        </div>
+    </section>
+
+    <!-- Popular Foods Section -->
+    <h2 class="section-title">Popular Foods</h2>
+    <section class="card-grid">
+        <div class="card">
+            <div class="card-img">Pizza</div>
+            <h3>Margherita Pizza</h3>
+            <p>₹99</p>
+            <button class="btn btn-small" onclick="addToCart(1)">Add to Cart</button>
+        </div>
+        <div class="card">
+            <div class="card-img">Burger</div>
+            <h3>Veg Burger</h3>
+            <p>₹90</p>
+            <button class="btn btn-small" onclick="addToCart(2)">Add to Cart</button>
+        </div>
+        <div class="card">
+            <div class="card-img">Cold Drink</div>
+            <h3>Cold Drink</h3>
+            <p>₹50</p>
+            <button class="btn btn-small" onclick="addToCart(3)">Add to Cart</button>
+        </div>
+        <div class="card">
+            <div class="card-img">Dessert</div>
+            <h3>Dessert Delight</h3>
+            <p>₹90</p>
+            <button class="btn btn-small" onclick="addToCart(4)">Add to Cart</button>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <h2 class="section-title">Categories</h2>
+    <section class="card-grid" style="grid-template-columns: repeat(4, 1fr); padding-bottom: 50px;">
+        <div class="card" style="border-radius: 50px; padding: 20px 10px;">
+            <p style="font-size: 26px;">🍕</p>
+            <h4>Pizza</h4>
+        </div>
+        <div class="card" style="border-radius: 50px; padding: 20px 10px;">
+            <p style="font-size: 26px;">🍔</p>
+            <h4>Burger</h4>
+        </div>
+        <div class="card" style="border-radius: 50px; padding: 20px 10px;">
+            <p style="font-size: 26px;">🥤</p>
+            <h4>Drinks</h4>
+        </div>
+        <div class="card" style="border-radius: 50px; padding: 20px 10px;">
+            <p style="font-size: 26px;">🍰</p>
+            <h4>Desserts</h4>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div>
+            <strong>Food House</strong>
+            <p style="font-size: 13px; color: #bbb;">Good Food, Good Mood</p>
+        </div>
+        <div>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Help</a>
+        </div>
+    </footer>
+
+    <!-- એક ફોલ્ડર બહાર js ફોલ્ડર માટે ../js/script.js -->
+   <script src="../script.js"></script>
+</body>
+</html>

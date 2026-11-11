@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Menu - Food House</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body onload="renderAdminMenu()">
+    <header>
+        <span class="logo">Food House [Admin]</span>
+        <div><span>Welcome, Admin</span></div>
+    </header>
+
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <a href="admin-dashboard.html">📊 Dashboard</a>
+            <a href="admin-menu.html" class="active">🍔 Menu</a>
+            <a href="admin-orders.html">📦 Orders</a>
+            <a href="admin-customers.html">👥 Customers</a>
+            <a href="../Client/index.html">🚪 Logout</a>
+        </aside>
+
+        <main class="admin-main">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>Manage Menu</h2>
+                <button class="btn" onclick="toggleAddModal()">+ Add New Item</button>
+            </div>
+
+            <!-- Add Item Form Modal -->
+            <div id="add_item_box" style="display:none; background:#fff; padding:20px; border-radius:6px; margin:20px 0; border:1px solid #ddd;">
+                <h4>Add Food Item</h4>
+                <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+                    <input type="text" id="new_food_name" class="form-control" placeholder="Food Name" style="flex:1;">
+                    <input type="text" id="new_food_cat" class="form-control" placeholder="Category (e.g. Pizza)" style="flex:1;">
+                    <input type="number" id="new_food_price" class="form-control" placeholder="Price (₹)" style="flex:1;">
+                    <button class="btn" onclick="addNewFood()">Save Item</button>
+                </div>
+            </div>
+
+            <table style="margin-top:20px;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="admin_menu_body"></tbody>
+            </table>
+        </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        function renderAdminMenu() {
+            const menu = JSON.parse(localStorage.getItem('fh_menu') || '[]');
+            const tbody = document.getElementById('admin_menu_body');
+            tbody.innerHTML = '';
+
+            menu.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>#${item.id}</td>
+                        <td><strong>${item.name}</strong></td>
+                        <td>${item.category}</td>
+                        <td>₹${item.price}</td>
+                        <td><button class="btn btn-danger btn-small" onclick="deleteMenuItem(${index})">Delete</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function toggleAddModal() {
+            const box = document.getElementById('add_item_box');
+            box.style.display = box.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function addNewFood() {
+            const name = document.getElementById('new_food_name').value.trim();
+            const category = document.getElementById('new_food_cat').value.trim();
+            const price = parseFloat(document.getElementById('new_food_price').value);
+
+            if (!name || !category || isNaN(price)) {
+                alert('Please enter valid item details.');
+                return;
+            }
+
+            const menu = JSON.parse(localStorage.getItem('fh_menu') || '[]');
+            menu.push({ id: menu.length + 1, name, category, price });
+            localStorage.setItem('fh_menu', JSON.stringify(menu));
+
+            document.getElementById('new_food_name').value = '';
+            document.getElementById('new_food_cat').value = '';
+            document.getElementById('new_food_price').value = '';
+
+            toggleAddModal();
+            renderAdminMenu();
+        }
+
+        function deleteMenuItem(index) {
+            if (confirm("Are you sure you want to delete this item?")) {
+                const menu = JSON.parse(localStorage.getItem('fh_menu') || '[]');
+                menu.splice(index, 1);
+                localStorage.setItem('fh_menu', JSON.stringify(menu));
+                renderAdminMenu();
+            }
+        }
+    </script>
+</body>
+</html>

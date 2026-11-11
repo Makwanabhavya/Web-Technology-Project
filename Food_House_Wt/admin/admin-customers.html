@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Customers - Food House</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body onload="renderCustomers()">
+    <header>
+        <span class="logo">Food House [Admin]</span>
+        <div><span>Welcome, Admin</span></div>
+    </header>
+
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <a href="admin-dashboard.html">📊 Dashboard</a>
+            <a href="admin-menu.html">🍔 Menu</a>
+            <a href="admin-orders.html">📦 Orders</a>
+            <a href="admin-customers.html" class="active">👥 Customers</a>
+            <a href="../Client/index.html">🚪 Logout</a>
+        </aside>
+
+        <main class="admin-main">
+            <h2>Registered Customers</h2>
+            <table style="margin-top:20px;">
+                <thead>
+                    <tr>
+                        <th>Sr.</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="customer_body"></tbody>
+            </table>
+        </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        function renderCustomers() {
+            const users = JSON.parse(localStorage.getItem('fh_users') || '[]');
+            const tbody = document.getElementById('customer_body');
+            tbody.innerHTML = '';
+
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">No registered customers yet.</td></tr>';
+                return;
+            }
+
+            users.forEach((u, i) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td><strong>${u.name}</strong></td>
+                        <td>${u.email}</td>
+                        <td>${u.mobile}</td>
+                        <td><span style="color:#28a745; font-weight:600;">Active</span></td>
+                    </tr>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

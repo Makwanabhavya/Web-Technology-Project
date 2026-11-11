@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food House - Order Summary</title>
+    <!-- Root style.css link -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">Food House</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="order-summary.html" class="active">Orders</a>
+            <a href="login.html">Login</a>
+            <a href="../admin/admin-login.html">Admin</a>
+        </nav>
+        <div class="nav-icons">
+            <a href="order-summary.html">🛒 Cart</a>
+        </div>
+    </header>
+
+    <div class="table-container">
+        <h2>Order Summary</h2>
+        <table style="margin-top:20px;">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cart_items">
+                <!-- Javascript will load items here -->
+            </tbody>
+        </table>
+
+        <div style="margin-top:25px; text-align:right;">
+            <h3>Total Amount: <span id="grand_total" style="color:#e67e22;">₹0</span></h3>
+            <button class="btn" style="margin-top:15px;" onclick="confirmOrder()">Confirm Order</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Food House</p>
+    </footer>
+
+    <!-- Root script.js link -->
+    <script src="../script.js"></script>
+
+    <!-- Page Load Cart Trigger -->
+    <script>
+        // આ સ્ક્રિપ્ટ પેજ ખૂલતાં જ સીધું loadCart() ફંક્શન ચાલુ કરશે
+        window.onload = function() {
+            if (typeof loadCart === "function") {
+                loadCart();
+            } else {
+                console.error("script.js load nathi thayu!");
+            }
+        };
+    </script>
+</body>
+</html>
